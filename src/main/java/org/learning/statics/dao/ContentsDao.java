@@ -1,0 +1,14 @@
+package org.learning.statics.dao;
+
+import org.learning.statics.model.Contents;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * Created by jieli5 on 8/21/2017.
+ */
+@Repository
+public interface ContentsDao extends JpaRepository<Contents,Integer>{
+}

@@ -10,10 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 /**
  * Created by jieli5 on 8/17/2017.
  */
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan
-@PropertySource("classpath:config/db.properties")
+@SpringBootApplication
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
