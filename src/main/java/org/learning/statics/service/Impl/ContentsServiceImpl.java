@@ -33,7 +33,7 @@ public class ContentsServiceImpl implements ContentsService{
 
     @Override
     public List<String> generateStaticPages() {
-        List<Contents> list = contensDao.findAll();
+        List<Contents> list = null;//contensDao.findAll();
         List<String> pageNameList = null;
         if (list != null){
             pageNameList = new ArrayList<String>();
@@ -63,5 +63,10 @@ public class ContentsServiceImpl implements ContentsService{
             }
         }
         return pageNameList;
+    }
+
+    @Override
+    public List<Contents> queryContents(String tutorialName) {
+        return contensDao.queryContentsByTutorialName(tutorialName);
     }
 }

@@ -18,8 +18,8 @@ public class ContentsController {
         return "Hello World";
     }
 
-    @RequestMapping("/static")
-    List<String> contents() {
-        return contentsService.generateStaticPages();
+    @RequestMapping("/static/{tutorialName}")
+    List<Contents> contents(@PathVariable String tutorialName) {
+        return contentsService.queryContents(tutorialName);
     }
 }

@@ -9,6 +9,6 @@ import java.util.List;
 /**
  * Created by jieli5 on 8/21/2017.
  */
-@Repository
-public interface ContentsDao extends JpaRepository<Contents,Integer>{
+public interface ContentsDao{
+    List<Contents> queryContentsByTutorialName(String tutorialName);
 }

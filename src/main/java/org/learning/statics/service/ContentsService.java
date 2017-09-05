@@ -9,4 +9,7 @@ import java.util.List;
  */
 public interface ContentsService {
     List<String> generateStaticPages();
+
+    List<Contents> queryContents(String tutorialName);
+
 }

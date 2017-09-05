@@ -6,18 +6,10 @@ import javax.persistence.*;
 /**
  * Created by jieli5 on 8/21/2017.
  */
-@Entity
-@Table(name="mongodb")
 public class Contents {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
     private Integer id;
-    @Column(name="title")
     private String title;
-    @Column(name="pageurl")
     private String pageUrl;
-    @Column(name="content")
     private String content;
 
     public Integer getId() {
