@@ -12,4 +12,6 @@ public interface ContentsService {
 
     List<Contents> queryContents(String tutorialName);
 
+    Integer insertContents2CMS(String tutorialName);
+
 }

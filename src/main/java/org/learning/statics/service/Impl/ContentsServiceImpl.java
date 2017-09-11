@@ -57,7 +57,7 @@ public class ContentsServiceImpl implements ContentsService{
 					}
 				}
                 }
-                staticPageUtil.downLoadImages("https://www.tutorialspoint.com",pngs);
+                //staticPageUtil.downLoadImages("https://www.tutorialspoint.com",pngs);
                 staticPageUtil.staticPage(title,doc.toString(),list);
                 pageNameList.add(title);
             }
@@ -68,5 +68,39 @@ public class ContentsServiceImpl implements ContentsService{
     @Override
     public List<Contents> queryContents(String tutorialName) {
         return contensDao.queryContentsByTutorialName(tutorialName);
+    }
+
+    @Override
+    public Integer insertContents2CMS(String tutorialName) {
+        List<Contents> list = this.queryContents(tutorialName);
+        System.out.println("开始翻译");
+        for (Contents item : list){
+            String content = item.getContent();
+            content = content.replaceAll("(?i)tutorials point","kzz");
+            String title = item.getTitle();
+            Document doc = Jsoup.parse(content);
+            Elements els = doc.body().getAllElements();
+            //Elements pngs = doc.select("img[src~=(?i)\\.(png|jpe?g)]");
+            for (Element e : els) {
+                if(e.nodeName() == "pre" || e.nodeName() == "b" ||
+                        e.nodeName() == "td" || e.nodeName() == "th" || e.nodeName() == "h2"){
+                    continue;
+                }
+                if(e.nodeName() == "img"){
+                    staticPageUtil.downLoadImages("https://www.tutorialspoint.com",e,tutorialName);
+                }
+                List<TextNode> tnList = e.textNodes();
+                for (TextNode tn : tnList){
+                    String orig = tn.getWholeText();
+                    if(StringUtils.isNotBlank(orig)){
+                        String translateOrig = translateUtil.translte(orig);
+                        tn.text(translateOrig);
+                    }
+                }
+            }
+            item.setContent(doc.select("body>*").toString());
+        }
+        System.out.println("翻译结束");
+        return contensDao.insertContentAndAttribute2CMS(list);
     }
 }

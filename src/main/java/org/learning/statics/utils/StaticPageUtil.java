@@ -70,24 +70,28 @@ public class StaticPageUtil {
         }
     }
 
-    public void downLoadImages(String prefix,Elements pngs){
+    public void downLoadImages(String prefix,Element element,String tutorialName){
         URL url = null;
         URLConnection uri = null;
         InputStream is = null;
         OutputStream os = null;
         try{
-            for(Element e : pngs){
-                String src=prefix+e.attr("src");//获取img中的src路径
-                String imageName = src.substring(src.lastIndexOf("/") + 1,src.length());
-                url = new URL(src);
-                uri=url.openConnection();
-                is=uri.getInputStream();
-                os = new FileOutputStream(new File(IMAGES_PATH, imageName));
-                byte[] buf = new byte[1024];
-                int l=0;
-                while((l=is.read(buf))!=-1){
-                    os.write(buf, 0, l);
-                }
+            String relativePath = element.attr("src");
+            String src=prefix+relativePath;//获取img中的src路径
+            String imageName = src.substring(src.lastIndexOf("/") + 1,src.length());
+            element.attr("src","http://www.kzz100.com/images/"+tutorialName+"/"+imageName);
+            url = new URL(src);
+            uri=url.openConnection();
+            is=uri.getInputStream();
+            File file = new File(IMAGES_PATH+tutorialName,imageName);
+            if(!file.getParentFile().exists()){
+                file.getParentFile().mkdir();
+            }
+            os = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int l=0;
+            while((l=is.read(buf))!=-1){
+                os.write(buf, 0, l);
             }
         }catch (Exception e){
             e.printStackTrace();

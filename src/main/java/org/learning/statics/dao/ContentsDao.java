@@ -11,4 +11,5 @@ import java.util.List;
  */
 public interface ContentsDao{
     List<Contents> queryContentsByTutorialName(String tutorialName);
+    int insertContentAndAttribute2CMS(List<Contents> contentList);
 }

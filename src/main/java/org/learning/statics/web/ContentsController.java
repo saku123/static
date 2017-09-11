@@ -19,7 +19,7 @@ public class ContentsController {
     }
 
     @RequestMapping("/static/{tutorialName}")
-    List<Contents> contents(@PathVariable String tutorialName) {
-        return contentsService.queryContents(tutorialName);
+    Integer contents(@PathVariable String tutorialName) {
+        return contentsService.insertContents2CMS(tutorialName);
     }
 }
